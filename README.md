@@ -14,15 +14,11 @@ By default the server and the client bind on localhost:8025
 
 Run the server
 ```shell script
-java -jar Server/target/Server-2.0-jar-with-dependencies.jar
+java -jar target/sample-websocket-2.0-SNAPSHOT-withdependencies.jar
 ```
 
 Run one or mode clients
 ```shell script
-java -jar JavaClient/target/JavaClient-2.0-jar-with-dependencies.jar
+java -cp target/sample-websocket-2.0-SNAPSHOT-withdependencies.jar fr.univtln.bruno.samples.websocket.client.Client
 ```
 
-Run the web client in a jetty server 
-```shell script
-mvn --projects WebClient jetty:run-war
-```
