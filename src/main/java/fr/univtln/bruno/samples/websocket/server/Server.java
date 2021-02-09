@@ -56,9 +56,9 @@ public class Server {
 
     public static void main(String[] args) {
 
-        try {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             start();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            ;
             log.info("Please press a key to stop the server.");
             reader.readLine();
         } catch (DeploymentException e) {

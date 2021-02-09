@@ -26,7 +26,6 @@ public class ServerIT {
 
     private static ClientEndpointConfig clientEndpointConfig = null;
     private static ClientManager clientManager = null;
-    private static ThreadPoolConfig workerThreadPoolConfig = null;
     private CountDownLatch messageLatch;
 
     private static void setupWebsocketClient() {
@@ -37,7 +36,7 @@ public class ServerIT {
                 .build();
         clientManager = ClientManager.createClient();
 
-        workerThreadPoolConfig = ThreadPoolConfig.defaultConfig();
+        ThreadPoolConfig workerThreadPoolConfig = ThreadPoolConfig.defaultConfig();
         workerThreadPoolConfig.setDaemon(false);
         workerThreadPoolConfig.setMaxPoolSize(4);
         workerThreadPoolConfig.setCorePoolSize(3);
@@ -66,14 +65,6 @@ public class ServerIT {
         Server.stop();
     }
 
-    @Before
-    public void beforeEach() {
-    }
-
-    @After
-    public void afterEach() {
-    }
-
     @Test
     public void testHello() throws InterruptedException, IOException, DeploymentException {
         messageLatch = new CountDownLatch(1);
@@ -94,12 +85,9 @@ public class ServerIT {
         @Override
         public void onOpen(Session session, EndpointConfig config) {
             try {
-                session.addMessageHandler(new MessageHandler.Whole<Message>() {
-                    @Override
-                    public void onMessage(Message message) {
-                        log.info(message.getMessageContent());
-                        messageLatch.countDown(); // signal that the message was received by the client
-                    }
+                session.addMessageHandler((MessageHandler.Whole<Message>) message -> {
+                    log.info(message.getMessageContent());
+                    messageLatch.countDown(); // signal that the message was received by the client
                 });
                 Message message = Message.builder()
                         .date(new Date())

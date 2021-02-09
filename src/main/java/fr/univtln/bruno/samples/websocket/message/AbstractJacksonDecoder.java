@@ -25,8 +25,10 @@ abstract class AbstractJacksonDecoder<T> {
         ParameterizedType thisClass = (ParameterizedType) this.getClass().getGenericSuperclass();
         Type t = thisClass.getActualTypeArguments()[0];
         if (t instanceof Class) {
+            //noinspection unchecked
             objectClass = (Class<T>) t;
         } else if (t instanceof ParameterizedType) {
+            //noinspection unchecked
             objectClass = (Class<T>) ((ParameterizedType) t).getRawType();
         }
     }

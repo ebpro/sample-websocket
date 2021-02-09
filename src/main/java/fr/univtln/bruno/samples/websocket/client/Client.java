@@ -60,7 +60,7 @@ public class Client {
      */
     public static void main(String[] args) {
         Client websocketClient = Client.of(Person.builder().firstname("John").lastname("Doe").build());
-        try {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             final ClientManager client = ClientManager.createClient();
             client.connectToServer(
                     websocketClient,
@@ -68,7 +68,6 @@ public class Client {
             );
 
             //read the next message and send it. Stops on empty message.
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             log.info("Send empty line to stop the client.");
             String line;
             do {
@@ -159,7 +158,7 @@ public class Client {
                                     .sender(sender)
                                     .messageContent(message)
                                     .build());
-            log.info("---JSON Sent--> "+new ObjectMapper().writeValueAsString(message1));
+            log.info("---JSON Sent--> " + new ObjectMapper().writeValueAsString(message1));
         } catch (IOException e) {
             log.info("IO Exception " + e.getLocalizedMessage());
         } catch (EncodeException e) {
