@@ -1,5 +1,6 @@
 package fr.univtln.bruno.samples.websocket.server;
 
+import fr.univtln.bruno.samples.websocket.ParameterSingleton;
 import fr.univtln.bruno.samples.websocket.message.Message;
 import jakarta.websocket.*;
 import jakarta.websocket.server.ServerEndpoint;
@@ -22,31 +23,13 @@ import java.util.Optional;
         encoders = {Message.EncoderDecoder.class},
         decoders = {Message.EncoderDecoder.class})
 public class Server {
-    //The server listing IP address
-    public static final String SERVER_IP;
-    //The server listing TCP PORT
-    public static final int SERVER_PORT;
-    //The list of opened session
     private static final List<Session> sessions = new ArrayList<>();
     private static org.glassfish.tyrus.server.Server websocketServer;
-
-    static {
-        SERVER_IP = Optional.ofNullable(System.getProperty("fr.univtln.bruno.demo.websocket.server.ip")).orElse("localhost");
-        int port = 8025;
-        try {
-            port = Integer.parseInt(Optional.ofNullable(System.getProperty("fr.univtln.bruno.demo.websocket.server.port")).orElse("8025"));
-        } catch (NumberFormatException e) {
-            log.severe("Server port is not a number, using default value");
-            System.exit(0);
-        }
-        SERVER_PORT = port;
-        log.info("Server IP:" + SERVER_IP + " Port: " + SERVER_PORT);
-    }
 
     public static void start() throws jakarta.websocket.DeploymentException {
         log.info("Server starting...");
         websocketServer =
-                new org.glassfish.tyrus.server.Server(SERVER_IP, SERVER_PORT, "/", null, Server.class);
+                new org.glassfish.tyrus.server.Server(ParameterSingleton.SERVER_IP, ParameterSingleton.SERVER_PORT, "/", null, Server.class);
         websocketServer.start();
     }
 

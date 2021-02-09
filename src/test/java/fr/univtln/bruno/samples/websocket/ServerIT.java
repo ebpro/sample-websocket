@@ -70,7 +70,7 @@ public class ServerIT {
         messageLatch = new CountDownLatch(1);
         try {
             clientManager.connectToServer(new ClientTestEndpoint(), clientEndpointConfig,
-                    URI.create("ws://" + Server.SERVER_IP + ":" + Server.SERVER_PORT + "/echo"));
+                    URI.create("ws://" + ParameterSingleton.SERVER_IP + ":" + ParameterSingleton.SERVER_PORT + "/echo"));
         } catch (Exception e) {
             e.printStackTrace();
             throw e;

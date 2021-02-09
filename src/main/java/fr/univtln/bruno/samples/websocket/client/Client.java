@@ -1,6 +1,7 @@
 package fr.univtln.bruno.samples.websocket.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.univtln.bruno.samples.websocket.ParameterSingleton;
 import fr.univtln.bruno.samples.websocket.message.Message;
 import fr.univtln.bruno.samples.websocket.model.Person;
 import jakarta.websocket.*;
@@ -14,7 +15,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.Date;
-import java.util.Optional;
 
 /**
  * This class provides a simple chat client using websocket.
@@ -26,21 +26,6 @@ import java.util.Optional;
 @ClientEndpoint(encoders = {Message.EncoderDecoder.class},
         decoders = {Message.EncoderDecoder.class})
 public class Client {
-    public static final String SERVER_IP;
-    public static final int SERVER_PORT;
-
-    static {
-        SERVER_IP = Optional.ofNullable(System.getProperty("fr.univtln.bruno.demo.websocket.server.ip")).orElse("localhost");
-        int port = 8025;
-        try {
-            port = Integer.parseInt(Optional.ofNullable(System.getProperty("fr.univtln.bruno.demo.websocket.server.port")).orElse("8025"));
-        } catch (NumberFormatException e) {
-            log.severe("Server port is not a number, using default value");
-            System.exit(0);
-        }
-        SERVER_PORT = port;
-        log.info("Server IP:" + SERVER_IP + " Port: " + SERVER_PORT);
-    }
 
     /**
      * The sender of the message in this client
@@ -64,7 +49,7 @@ public class Client {
             final ClientManager client = ClientManager.createClient();
             client.connectToServer(
                     websocketClient,
-                    URI.create("ws://" + SERVER_IP + ":" + SERVER_PORT + "/echo")
+                    URI.create("ws://" + ParameterSingleton.SERVER_IP + ":" + ParameterSingleton.SERVER_PORT + "/echo")
             );
 
             //read the next message and send it. Stops on empty message.
@@ -76,11 +61,10 @@ public class Client {
                     websocketClient.sendMessage(line);
             } while (!"".equals(line));
         } catch (IOException ioException) {
-            log.severe("IO Exception "+ioException.getLocalizedMessage());
+            log.severe("IO Exception " + ioException.getLocalizedMessage());
         } catch (DeploymentException deploymentException) {
-            log.severe("Deployement Exception "+deploymentException.getLocalizedMessage());
-        }
-        finally {
+            log.severe("Deployement Exception " + deploymentException.getLocalizedMessage());
+        } finally {
             try {
                 websocketClient.closeSession();
             } catch (IOException e) {
