@@ -28,7 +28,7 @@ public class Server {
     public static final int SERVER_PORT;
     //The list of opened session
     private static final List<Session> sessions = new ArrayList<>();
-    private static org.glassfish.tyrus.server.Server server;
+    private static org.glassfish.tyrus.server.Server websocketServer;
 
     static {
         SERVER_IP = Optional.ofNullable(System.getProperty("fr.univtln.bruno.demo.websocket.server.ip")).orElse("localhost");
@@ -45,22 +45,22 @@ public class Server {
 
     public static void start() throws jakarta.websocket.DeploymentException {
         log.info("Server starting...");
-        server =
+        websocketServer =
                 new org.glassfish.tyrus.server.Server(SERVER_IP, SERVER_PORT, "/", null, Server.class);
-        server.start();
+        websocketServer.start();
     }
 
     public static void stop() {
-        server.stop();
+        websocketServer.stop();
     }
 
     public static void main(String[] args) {
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             start();
-            ;
             log.info("Please press a key to stop the server.");
-            reader.readLine();
+
+            String line = reader.readLine();
         } catch (DeploymentException e) {
             log.severe("Server start error " + e.getLocalizedMessage());
         } catch (IOException e) {
