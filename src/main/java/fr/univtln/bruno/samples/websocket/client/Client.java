@@ -75,9 +75,12 @@ public class Client {
                 if (!"".equals(line))
                     websocketClient.sendMessage(line);
             } while (!"".equals(line));
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
+        } catch (IOException ioException) {
+            log.severe("IO Exception "+ioException.getLocalizedMessage());
+        } catch (DeploymentException deploymentException) {
+            log.severe("Deployement Exception "+deploymentException.getLocalizedMessage());
+        }
+        finally {
             try {
                 websocketClient.closeSession();
             } catch (IOException e) {
@@ -150,14 +153,12 @@ public class Client {
      */
     public void sendMessage(String message) {
         try {
-            Message message1;
-            session.getBasicRemote()
-                    .sendObject(
-                            message1 = Message.builder()
-                                    .date(new Date())
-                                    .sender(sender)
-                                    .messageContent(message)
-                                    .build());
+            Message message1 = Message.builder()
+                    .date(new Date())
+                    .sender(sender)
+                    .messageContent(message)
+                    .build();
+            session.getBasicRemote().sendObject(message1);
             log.info("---JSON Sent--> " + new ObjectMapper().writeValueAsString(message1));
         } catch (IOException e) {
             log.info("IO Exception " + e.getLocalizedMessage());

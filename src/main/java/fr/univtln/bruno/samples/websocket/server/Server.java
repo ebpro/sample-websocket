@@ -64,7 +64,7 @@ public class Server {
         } catch (DeploymentException e) {
             log.severe("Server start error " + e.getLocalizedMessage());
         } catch (IOException e) {
-            e.printStackTrace();
+            log.severe("IO Exception "+e.getLocalizedMessage());
         } finally {
             stop();
         }
