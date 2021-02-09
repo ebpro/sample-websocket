@@ -9,6 +9,8 @@ public class ParameterSingleton {
     public static final String SERVER_IP;
     public static final int SERVER_PORT;
 
+    private ParameterSingleton() {}
+
     static {
         SERVER_IP = Optional.ofNullable(System.getProperty("fr.univtln.bruno.demo.websocket.server.ip")).orElse("localhost");
         int port = 8025;

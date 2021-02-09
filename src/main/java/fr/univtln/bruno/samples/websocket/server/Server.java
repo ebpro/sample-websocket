@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * This class provides a simple echo server (simple chat) using websockets
@@ -47,7 +46,7 @@ public class Server {
         } catch (DeploymentException e) {
             log.severe("Server start error " + e.getLocalizedMessage());
         } catch (IOException e) {
-            log.severe("IO Exception "+e.getLocalizedMessage());
+            log.severe("IO Exception " + e.getLocalizedMessage());
         } finally {
             stop();
         }
