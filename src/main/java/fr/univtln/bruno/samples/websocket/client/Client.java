@@ -67,8 +67,8 @@ public class Client {
         } finally {
             try {
                 websocketClient.closeSession();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (IOException ioException) {
+                log.severe("IO Exception " + ioException.getLocalizedMessage());
             }
         }
     }
