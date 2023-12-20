@@ -10,7 +10,7 @@ mvn clean package
 
 ## Running
 ### Java
-By default the server and the client bind on localhost:8025
+By default, the server and the client bind on localhost:8025
 
 Run the server
 ```shell script
