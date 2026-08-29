@@ -3,7 +3,7 @@ on: [push]
 jobs:
   cleanup:
     # The tags on the runner
-    runs-on: [self-hosted, Linux]
+    runs-on: ebpro-org
     steps:
         - uses: smartsquaregmbh/delete-old-packages@v0.2.0
           with:
