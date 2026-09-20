@@ -13,5 +13,5 @@ docker run \
           --rm \
           --env PUID="$(id -u)" -e PGID="$(id -g)" \
           --env MAVEN_CONFIG=/var/maven/.m2 \
-          brunoe/maven:3.6.3-jdk-11-openj9 \
+          maven:3.6.3-openjdk-11 \
           runuser --user user --group user -- mvn -B -e -T 1C -Duser.home=/var/maven --settings /usr/src/mymaven/.github/ci-settings.xml "$@"
