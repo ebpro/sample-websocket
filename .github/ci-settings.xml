@@ -28,10 +28,15 @@
         <profile>
             <id>sonar</id>
             <properties>
-                <sonar.host.url>http://pc-bruno:9000</sonar.host.url>
+                <sonar.host.url>${env.SONAR_URL}</sonar.host.url>
+                <sonar.token>${env.SONAR_TOKEN}</sonar.token>
                 <sonar.login>${env.SONAR_TOKEN}</sonar.login>
             </properties>
         </profile>
     </profiles>
+
+    <activeProfiles>
+        <activeProfile>sonar</activeProfile>
+    </activeProfiles>
 
 </settings>
