@@ -68,7 +68,7 @@ jobs:
           java-version: '11'
 
       - name: SonarQube Scan
-        run: ./mvnw -B -Psonar -s .github/ci-settings.xml -Dsonar.branch.name=${GITHUB_REF#refs/heads/} sonar:sonar
+        run: ./mvnw -B -Psonar -s .github/ci-settings.xml -Dsonar.branch.name=${GITHUB_REF#refs/heads/} compile sonar:sonar
 
       - name: SonarQube Quality Gate
         run: ./mvnw -B -Psonar -s .github/ci-settings.xml -pl . sonar-quality-gate:check
